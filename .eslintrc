@@ -1,0 +1,61 @@
+{
+    "root": true,
+    "extends": ["airbnb"],
+    "plugins": ["babel", "react"],
+    "parser": "babel-eslint",
+    "settings": {
+        "import/resolver": "webpack"
+    },
+    "rules": {
+        "indent": ["error", 4, {
+            "SwitchCase": 1
+        }],
+        "no-alert": "error",
+        "no-debugger": "error",
+        "no-console": "error",
+        "no-shadow": "off",
+        "no-plusplus": "off",
+        "no-empty-pattern": "off",
+        "no-underscore-dangle": "off",
+        "no-case-declarations": "off",
+        "no-else-return": "off",
+        "padded-blocks": "off",
+        "no-tabs": "off",
+        "default-case": "off",
+        "comma-dangle": "off",
+        "no-nested-ternary": "off",
+        "consistent-return": "off",
+        "no-param-reassign": "off",
+        "no-use-before-define": "off",
+        "brace-style": ["error", "stroustrup", {
+            "allowSingleLine": true
+        }],
+        "import/prefer-default-export": "off",
+        "max-len": ["error", {
+            "code": 160
+        }],
+        "object-curly-newline": ["error", {
+            "multiline": true,
+            "consistent": true
+        }],
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/label-has-for": "off",
+        "react/prefer-stateless-function": "error",
+        "react/destructuring-assignment": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "react/forbid-prop-types": ["warn", {
+            "forbid": ["any"]
+        }],
+        "react/jsx-indent": ["error", 4, {
+            "indentLogicalExpressions": true
+        }],
+        "arrow-body-style": "off",
+        "arrow-parens": ["error", "as-needed"],
+        "no-confusing-arrow": "off"
+    },
+    "env": {
+        "browser": true
+    }
+}
