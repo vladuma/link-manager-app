@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
+import { useHistory } from 'react-router-dom';
+import KeyboardEventHandler from "react-keyboard-event-handler";
 
 import Grid from '@material-ui/core/Grid';
 
@@ -11,11 +13,20 @@ import EditBtn from '../actionBtns/editBtn';
 
 export const View = (props) => {
     console.log(props);
-    const [project, setProject] = React.useState(props.project);
-    const [items, setItems] = React.useState(props.project.items);
+    let history = useHistory();
+    const [project, setProject] = React.useState(props.project ? props.project : props.location.state);
+    const [items, setItems] = React.useState(project.items);
     
     const handleFilter = (sortedItems) => {
         setItems(sortedItems);
+    }
+    const handleEdit = () => {
+        history.push({
+            pathname: `/edit/${props.match.params.id}`,
+            state: {
+                ...project
+            }
+        });
     }
     return (
         <div>
@@ -32,7 +43,8 @@ export const View = (props) => {
                         null
                 }
             </Grid>
-            <EditBtn action="editProject" project={project} id={props.match.params.id}/>
+            <EditBtn doAction={handleEdit}/>
+            <KeyboardEventHandler handleKeys={['shift+e']} onKeyEvent={(key, e) => handleEdit(e)} />
         </div>
     )
 }

@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import Options from '../actionBtns/optionsBtn';
+import Share from '../actionBtns/shareBtn';
 
 import { connect } from 'react-redux';
 import { deleteProject } from '../../store/actions/projectsActions';
@@ -58,6 +59,7 @@ function ProjectCard(props) {
   return (
     <Card className={classes.card}>
       <Options project={project} />
+      <Share project={project} />
       <CardActionArea className={classes.area}>
         <div className={classes.media} style={{background: project.backgroundColor + ' linear-gradient(to bottom, rgba(0,0,0, 0.07), rgba(255,255,255, 0.07))'}} />
         <CardContent>

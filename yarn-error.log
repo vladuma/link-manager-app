@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\vlad0\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @material-ui
+  C:\Program Files\nodejs\node.exe C:\Users\vlad0\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add PropTypes
 
 PATH: 
   C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\ProgramData\Oracle\Java\javapath;C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;"C:\Users\vlad0\Downloads\dart-sass;C:\Windows\system32";C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\vlad0\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs;C:\Users\vlad0\AppData\Roaming\npm\;C:\Users\vlad0\$APPDATA\npm\;C:\Program Files\nodejs\;C:\python27;C:\Program Files\Amazon\AWSCLI\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Users\vlad0\Anaconda3;C:\Users\vlad0\Anaconda3\Library\mingw-w64\bin;C:\Users\vlad0\Anaconda3\Library\usr\bin;C:\Users\vlad0\Anaconda3\Library\bin;C:\Users\vlad0\Anaconda3\Scripts;C:\Users\vlad0\AppData\Local\Microsoft\WindowsApps;C:\Users\vlad0\AppData\Local\atom\bin;C:\Users\vlad0\AppData\Local\GitHubDesktop\bin;C:\Program Files\MongoDB\Server\4.0\bin;C:\Users\vlad0\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\vlad0\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\nodejs;C:\Users\vlad0\AppData\Roaming\npm\;C:\Users\vlad0\$APPDATA\npm\;C:\Users\vlad0\AppData\Roaming\npm;C:\python27;
@@ -14,8 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@material-ui: Request "https://registry.yarnpkg.com/@material-ui" returned a 405
-      at Request.params.callback [as _callback] (C:\Users\vlad0\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66947:18)
+  Error: https://registry.yarnpkg.com/PropTypes: Not found
+      at Request.params.callback [as _callback] (C:\Users\vlad0\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66938:18)
       at Request.self.callback (C:\Users\vlad0\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140622:22)
       at Request.emit (events.js:210:5)
       at Request.<anonymous> (C:\Users\vlad0\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141594:10)
@@ -39,6 +39,7 @@ npm manifest:
       "@babel/preset-react": "^7.7.4",
       "@material-ui/core": "^4.8.0",
       "@material-ui/icons": "^4.5.1",
+      "@material-ui/lab": "^4.0.0-alpha.37",
       "babel-core": "^6.26.3",
       "babel-loader": "^8.0.6",
       "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -49,6 +50,8 @@ npm manifest:
       "normalize.css": "^8.0.1",
       "react": "^16.12.0",
       "react-dom": "^16.12.0",
+      "react-hotkeys": "^2.0.0",
+      "react-keyboard-event-handler": "^1.5.3",
       "react-redux": "5.1.1",
       "react-redux-firebase": "2.2.4",
       "react-router-dom": "^5.1.2",
@@ -1061,6 +1064,17 @@ Lockfile:
     integrity sha512-YZ/BgJbXX4a0gOuKWb30mBaHaoXRqPanlePam83JQPZ/y4kl+3aW0Wv9tlR70hB5EGAkEJGW5m4ktJwMgxQAeA==
     dependencies:
       "@babel/runtime" "^7.4.4"
+  
+  "@material-ui/lab@^4.0.0-alpha.37":
+    version "4.0.0-alpha.37"
+    resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.37.tgz#194bab4ecf77d19a23514ea3ab71566c92a9b3a1"
+    integrity sha512-OebQZqKYDO44vER5ZDHDjXF9/rq0Hqq5IRfgKwM1JzlzAZINd6RPX0xrh78psZ1mOWsgAteCY6/zPSHRPXAkqw==
+    dependencies:
+      "@babel/runtime" "^7.4.4"
+      "@material-ui/utils" "^4.7.1"
+      clsx "^1.0.4"
+      prop-types "^15.7.2"
+      react-is "^16.8.0"
   
   "@material-ui/styles@^4.7.1":
     version "4.7.1"
@@ -2519,7 +2533,7 @@ Lockfile:
       strip-ansi "^5.2.0"
       wrap-ansi "^5.1.0"
   
-  clsx@^1.0.2:
+  clsx@^1.0.2, clsx@^1.0.4:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
     integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
@@ -5520,10 +5534,22 @@ Lockfile:
       prop-types "^15.6.2"
       scheduler "^0.18.0"
   
+  react-hotkeys@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/react-hotkeys/-/react-hotkeys-2.0.0.tgz#a7719c7340cbba888b0e9184f806a9ec0ac2c53f"
+    integrity sha512-3n3OU8vLX/pfcJrR3xJ1zlww6KS1kEJt0Whxc4FiGV+MJrQ1mYSYI3qS/11d2MJDFm8IhOXMTFQirfu6AVOF6Q==
+    dependencies:
+      prop-types "^15.6.1"
+  
   react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1:
     version "16.12.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
     integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
+  
+  react-keyboard-event-handler@^1.5.3:
+    version "1.5.3"
+    resolved "https://registry.yarnpkg.com/react-keyboard-event-handler/-/react-keyboard-event-handler-1.5.3.tgz#d10aa4d5e6d0e274ec27718ba1782c9fa41f4098"
+    integrity sha512-d1UYGtU5iHwINMQ2QXX5Cm1YhgYY7Zq9hx9bHVcgTFsFf93loI2yJfkgL4LO9UCBQBczroMs+RckPyPJDuEwuw==
   
   react-lifecycles-compat@^3.0.0:
     version "3.0.4"

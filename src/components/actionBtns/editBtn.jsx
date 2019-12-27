@@ -22,22 +22,22 @@ const EditBtn = (props) => {
   let history = useHistory();
   const classes = useStyles();
 
-  const doAction = () => {
-    switch(props.action) {
-      case 'editProject':
-        console.log(props);
-        return history.push({
-          pathname: `/edit/${props.id}`,
-          state: {
-            ...props.project
-          }
-        });
-    }
-  }
+  // const doAction = () => {
+  //   switch(props.action) {
+  //     case 'editProject':
+  //       console.log(props);
+  //       return history.push({
+  //         pathname: `/edit/${props.id}`,
+  //         state: {
+  //           ...props.project
+  //         }
+  //       });
+  //   }
+  // }
   
   return (
     <div className={classes.root}>
-      <Fab color="primary" aria-label="add" onClick={doAction}>
+      <Fab color="primary" aria-label="add" onClick={props.doAction}>
         <EditIcon />
       </Fab>
     </div>

@@ -12,6 +12,10 @@ import { connect } from 'react-redux';
 import { createProject } from '../../store/actions/projectsActions';
 import { saveProjectEdit } from '../../store/actions/projectsActions';
 
+import {validateProject} from '../misc/validateInputs';
+import KeyboardEventHandler from "react-keyboard-event-handler";
+import Error from '../misc/error';
+
 class Edit extends Component {
     constructor(props) { 
         super(props);
@@ -25,7 +29,7 @@ class Edit extends Component {
                 newItem: inheritState.newItem,
                 newItemType: inheritState.newItemType,
                 items: inheritState.items,
-                backgroundColor: inheritState.backgroundColor
+                backgroundColor: inheritState.backgroundColor ? inheritState.backgroundColor : '#fff'
             };
         } else {
             this.state = {
@@ -86,24 +90,37 @@ class Edit extends Component {
         });
     }
     handleSave() {
-        if(this.state.isNew) {
-            this.props.createProject(this.state).then((res) => {
-                this.setState({
-                    redirect: true,
-                    id: res
-                });
-            });
-        } else {
-            this.props.saveProjectEdit(this.state).then((res) => {
-                if (!this.state.id || this.state.id === '') {
+        this.setState({
+          invalid: false,
+          validationError: ''
+        });
+
+        const validation = validateProject(this.state);
+        if (validation.isValid) {
+            if(this.state.isNew) {
+                this.props.createProject(this.state).then((res) => {
                     this.setState({
+                        redirect: true,
                         id: res
                     });
-                }
-
-                this.setState({
-                    redirect: true
                 });
+            } else {
+                this.props.saveProjectEdit(this.state).then((res) => {
+                    if (!this.state.id || this.state.id === '') {
+                        this.setState({
+                            id: res
+                        });
+                    }
+    
+                    this.setState({
+                        redirect: true
+                    });
+                });
+            }
+        } else {
+            this.setState({
+              invalid: true,
+              validationError: validation.error
             });
         }
     }
@@ -153,6 +170,11 @@ class Edit extends Component {
                     :
                     null
                 }
+                {this.state.invalid ?
+                    <Error open={true} message={this.state.validationError} />
+                    :
+                    null
+                }
                 <Title handleTitle={this.handleTitle} handleColor={this.handleColor} isEditMode={true} name={this.state.name} color={this.state.backgroundColor} />
                 <Grid container spacing={3}>
                     {
@@ -181,6 +203,8 @@ class Edit extends Component {
                 </Grid>
 
                 <SaveBtn handleSave={this.handleSave} />
+                <KeyboardEventHandler handleKeys={['shift+s']} onKeyEvent={(key, e) => this.handleSave(e)} />
+
             </div>
         )
     }

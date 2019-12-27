@@ -3,7 +3,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
-
+import { useHistory } from "react-router-dom";
+import KeyboardEventHandler from "react-keyboard-event-handler";
 import AddBtn from '../actionBtns/addBtn';
 import Card from './card';
 import Preloader from './preloader';
@@ -24,7 +25,12 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = (props) => {
     const classes = useStyles();
-    console.log(props.projects);
+    let history = useHistory();
+
+    const handleNew = (e) => {
+        e.preventDefault();
+        history.push('create');
+    }
 
     return(
         <div className={classes.root}>
@@ -41,6 +47,7 @@ const Dashboard = (props) => {
                 }
             </Grid>
             <AddBtn action="addProject"/>
+            <KeyboardEventHandler handleKeys={['shift+n']} onKeyEvent={(key, e) => handleNew(e)} />
         </div>
     );
 }
