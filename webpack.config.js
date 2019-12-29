@@ -10,7 +10,7 @@ module.exports = {
     poll: 1000
   },
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve(__dirname, 'public'),
     filename: "main.js"
   },
   resolve: {
