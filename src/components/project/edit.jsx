@@ -27,6 +27,7 @@ class Edit extends Component {
                 name: inheritState.name,
                 isNew: false,
                 newItem: inheritState.newItem,
+                isPrivate: inheritState.isPrivate,
                 newItemType: inheritState.newItemType,
                 items: inheritState.items,
                 backgroundColor: inheritState.backgroundColor ? inheritState.backgroundColor : '#fff'
@@ -42,6 +43,7 @@ class Edit extends Component {
         }
 
         this.handleTitle = this.handleTitle.bind(this);
+        this.handleProjectPrivacy = this.handleProjectPrivacy.bind(this);
         this.handleColor = this.handleColor.bind(this);
         this.handleButton = this.handleButton.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
@@ -55,6 +57,11 @@ class Edit extends Component {
         this.setState({
             name: title
         });
+    }
+    handleProjectPrivacy(status) {
+        this.setState({
+            isPrivate: status
+        })
     }
     handleColor(color) {
         this.setState({
@@ -106,6 +113,7 @@ class Edit extends Component {
                 });
             } else {
                 this.props.saveProjectEdit(this.state).then((res) => {
+                    console.log('id', res);
                     if (!this.state.id || this.state.id === '') {
                         this.setState({
                             id: res
@@ -175,7 +183,7 @@ class Edit extends Component {
                     :
                     null
                 }
-                <Title handleTitle={this.handleTitle} handleColor={this.handleColor} isEditMode={true} name={this.state.name} color={this.state.backgroundColor} />
+                <Title handleTitle={this.handleTitle} handleColor={this.handleColor} isEditMode={true} name={this.state.name} color={this.state.backgroundColor} status={this.state.isPrivate} handleProjectPrivacy={this.handleProjectPrivacy} />
                 <Grid container spacing={3}>
                     {
                         this.state.items && this.state.items.length ?

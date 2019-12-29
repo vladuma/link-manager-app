@@ -67,7 +67,11 @@ function ProjectCard(props) {
             {project.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Project has {project.items.length} items
+          {project && project.items && project.items.length ?
+            `Project has ${project.items.length} items`
+            :
+            null
+          } 
           </Typography>
         </CardContent>
       </CardActionArea>

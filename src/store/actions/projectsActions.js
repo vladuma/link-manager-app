@@ -2,7 +2,6 @@ export const createProject = (project) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
         const auth = getState().firebase.auth;
-
         return firestore.collection('projects').add({ 
             uid: auth.uid,
             dateCreated: new Date(),          
@@ -51,7 +50,7 @@ export const saveProjectEdit = (project) => {
 
         if (project.id) {
             return firestore.collection('projects').doc(project.id).update({
-                    ...project
+                ...project
             })
             .then(() => {
                 dispatch({
@@ -62,7 +61,6 @@ export const saveProjectEdit = (project) => {
                     type: 'SAVE_PROJECT_ERROR',
                     error
                 });
-
                 console.log('firebase error:', error);
             });
         } else {
@@ -71,16 +69,22 @@ export const saveProjectEdit = (project) => {
             return firestore.collection('projects').add({
                 uid: auth.uid,
                 dateCreated: new Date(),
-                project: {
-                    ...project,
-                }
+                ...project,
             }).then((res) => {
                 console.log(res);
-                dispatch({
-                    type: 'CREATE_PROJECT',
-                    project
+                return firestore.collection('projects').doc(res.id).update({
+                    id: res.id
+                }).then(() => {
+                    const updated = {id: res.id, ...project}
+                    console.log('updated', updated);
+                    dispatch({
+                        type: 'CREATE_PROJECT',
+                        updated
+                    });
+                    return res.id;
+                }).catch(e => {
+                    console.log('error updating id', e);
                 });
-                return res.id;
             }).catch((error) => {
                 dispatch({
                     type: 'CREATE_PROJECT_ERROR',
@@ -91,3 +95,15 @@ export const saveProjectEdit = (project) => {
         }
     };
 };
+
+export const uploadToStorage = (file) => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+        const firebase = getFirebase();
+        const bucket = firebase.storage().ref();
+        const dateCode = Date.now();
+        const importRef = bucket.child('imports/' + dateCode + '_' + file.name);
+        return importRef.put(file).then(res => {
+            return res;
+        })
+    };
+}

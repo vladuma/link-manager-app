@@ -8,6 +8,7 @@ import KeyboardEventHandler from "react-keyboard-event-handler";
 import AddBtn from '../actionBtns/addBtn';
 import Card from './card';
 import Preloader from './preloader';
+import ImportBtn from '../actionBtns/import';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +16,11 @@ import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
+    },
+    title: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     paper: {
         padding: theme.spacing(2),
@@ -31,17 +37,24 @@ const Dashboard = (props) => {
         e.preventDefault();
         history.push('create');
     }
+    console.log(props);
 
     return(
         <div className={classes.root}>
-            <h1>Dashboard</h1>
+            <div className={classes.title}>
+                <h1>Dashboard</h1>
+                <ImportBtn uid={props.auth.uid}/>
+            </div>
             <Grid container spacing={3}>
-                {props && props.projects && props.projects.length ?
-                        props.projects.map((project, idx) => (
-                            <Grid item xs={12} sm={6} md={4} key={idx} >
-                                <Card project={project} id={project.id} />
-                            </Grid>
-                        ))
+                {props && props.projects ?
+                        props.projects.length ? 
+                            props.projects.map((project, idx) => (
+                                <Grid item xs={12} sm={6} md={4} key={idx} >
+                                    <Card project={project} id={project.id} />
+                                </Grid>
+                            ))
+                        :
+                            null
                     :
                         <Preloader/>
                 }

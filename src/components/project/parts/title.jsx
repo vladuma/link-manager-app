@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import ColorPicker from './colorPicker';
 import Options from '../../actionBtns/optionsBtn';
 import Filters from '../../actionBtns/fliters';
+import Switch from './projectSwitch';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +30,7 @@ const Title = (props) => {
         props.isEditMode ?
             <div className={classes.root}>
                 <TextField id="standard-basic" label="Name" defaultValue={props.name} onChange={handleChange}/>
+                <Switch handleChange={props.handleProjectPrivacy} status={props.status}/>
                 <ColorPicker
                     color={props.color ? props.color : ''}
                     handleColor={color => props.handleColor(String(color))}

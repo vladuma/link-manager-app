@@ -6,6 +6,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ShareIcon from '@material-ui/icons/Share';
 
+import LinkPopup from '../dashboard/linkPopup';
+
 const useStyles = makeStyles({
   root: {
     position: 'absolute',
@@ -35,6 +37,8 @@ const ITEM_HEIGHT = 48;
 export default function ShareBtn(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [linkModal, setLinkModal] = React.useState(false);
+  const [link, setLink] = React.useState('');
   const open = Boolean(anchorEl);
   const {project} = props;
   let history = useHistory();
@@ -49,12 +53,27 @@ export default function ShareBtn(props) {
     handleMenuAction(e.target.dataset.value);
   };
   const handleMenuAction = (action) => {
+      setLinkModal(false);
     switch (action) {
       case 'getLink':
           console.log('get link');
+          setLink(props.project.id);
+          setLinkModal(true);
         break;
       case 'export':
         console.log('export');
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        fetch(proxyurl + 'https://us-central1-bookmark-app-ff6b2.cloudfunctions.net/exportFile?id=' + props.project.id)
+        .then(response => {
+          const filename =  response.headers.get('Content-Disposition').split('filename=')[1];
+          response.blob().then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+          });
+        });
         break;
     }
   }
@@ -89,6 +108,11 @@ export default function ShareBtn(props) {
           </MenuItem>
         ))}
       </Menu>
+      {linkModal? 
+        <LinkPopup link={link}/>
+        :
+        null
+      }
     </div>
   );
 }
