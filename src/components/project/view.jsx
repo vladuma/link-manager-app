@@ -14,8 +14,17 @@ import EditBtn from '../actionBtns/editBtn';
 export const View = (props) => {
     console.log(props);
     let history = useHistory();
-    const [project, setProject] = React.useState(props.project ? props.project : props.location.state);
+    const [project, setProject] = React.useState(props.location.state ? props.location.state : props.project);
+    
+    useEffect(() => {
+        setProject(props.project);
+    }, [props.project]);
+
     const [items, setItems] = React.useState(project.items);
+
+    useEffect(() => {
+        setItems(project.items);
+    }, [project.items]);
     
     const handleFilter = (sortedItems) => {
         setItems(sortedItems);

@@ -65,8 +65,8 @@ const signedInLinks = (props) => {
     const classes = useStyles();
     let history = useHistory();
 
-    const handleProjectClick = (id) => {
-        history.push('/project/' + id);
+    const handleProjectClick = (project) => {
+        history.push({pathname: '/project/' + project.id, state: project});
     }
     const handleProjects = (e) => {
         props.handleDrawerOpen(e);
@@ -106,7 +106,7 @@ const signedInLinks = (props) => {
                                         })
                                     }
                                     key = {project.id}
-                                    onClick = {() => handleProjectClick(project.id)} >
+                                    onClick = {() => handleProjectClick(project)} >
                                         <div className={classes.swatch} style={{backgroundColor: project.backgroundColor}}/>
                                         <ListItemText primary={project.name} />
                                         <Options project={project} />
