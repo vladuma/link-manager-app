@@ -190,7 +190,7 @@ class Edit extends Component {
                             this.state.items.map((item, id) => (
                                 !item.isEditMode ?
                                     <Grid item xs={12} sm={6} md={4} key={id}>  
-                                        <List data={item} id={id} handleEdit={this.handleEdit} handleDelete={this.handleDelete}/>
+                                        <List data={item} id={id} handleEdit={this.handleEdit} handleDelete={this.handleDelete} handleItemSelect={null}/>
                                     </Grid> 
                                 :
                                     <Grid item xs={12} sm={6} md={4} key={id}>  

@@ -11,7 +11,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: "main.js"
+    filename: "main.js",
+    publicPath: '/'
   },
   resolve: {
       extensions: [' ', '.js', '.jsx'],
@@ -37,6 +38,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    port: 8000
+    port: 8000,
+    historyApiFallback: true
   }
 };

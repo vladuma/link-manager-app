@@ -12,14 +12,18 @@ import List from './parts/listComponent';
 import EditBtn from '../actionBtns/editBtn';
 
 export const View = (props) => {
-    console.log(props);
     let history = useHistory();
-    const [project, setProject] = React.useState(props.location.state ? props.location.state : props.project);
+    const historyProject = props.location.state;
+    const [project, setProject] = React.useState(historyProject ? historyProject : props.project);
     const [items, setItems] = React.useState(project.items);
     
     useEffect(() => {
         setProject(props.project);
     }, [props.project]);
+
+    useEffect(() => {
+        setProject(props.location.state);
+    }, [props.location.state]);
 
     useEffect(() => {
         setItems(project.items);

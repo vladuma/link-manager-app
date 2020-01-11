@@ -42,27 +42,35 @@ export default function List(props) {
     props.handleEdit(props.id);
   }
   React.useEffect(() => {
-    setSelected(isSelected);
-    props.handleItemSelect(props.data.id, isSelected);
+    if (!props.data.isView && props.handleItemSelect) {
+      setSelected(isSelected);
+      props.handleItemSelect(props.data.id, isSelected);
+    }
   }, [isSelected]);
   React.useEffect(() => {
     setSelected(false);
   }, [props.data]);
-  console.log(isSelected)
+
   if (props.data.type === 'link' || props.data.type === 'Link') {
     return (
       <Paper className={clsx(classes.root, {
                 [classes.isSelected]: isSelected,
                 [classes.notSelected]: !isSelected
             })}
-        onClick={() => setSelected(!isSelected)}>
-        <Radio
-          className={classes.radio}
-          color="default"
-          size="small"
-          checked={isSelected}
-          onChange={() => setSelected(!isSelected)}
-        />
+        onClick={() => props.isView ? setSelected(!isSelected) : null}>
+        
+        {props.isView ?
+          <Radio
+            className={classes.radio}
+            color="default"
+            size="small"
+            checked={isSelected}
+            onChange={() => setSelected(!isSelected)}
+          />
+          :
+          null
+        }
+
         <Typography variant="h5" component="h3" className={classes.title}>
           <a href={props.data.content} target="_blank" onClick={(e)=> e.stopPropagation()}>
             {props.data.description ? props.data.description : props.data.content}

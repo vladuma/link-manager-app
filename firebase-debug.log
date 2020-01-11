@@ -1,0 +1,17 @@
+[debug] [2020-01-11T07:08:14.224Z] ----------------------------------------------------------------------
+[debug] [2020-01-11T07:08:14.227Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\vlad0\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-01-11T07:08:14.227Z] CLI Version:   7.11.0
+[debug] [2020-01-11T07:08:14.228Z] Platform:      win32
+[debug] [2020-01-11T07:08:14.228Z] Node Version:  v12.13.0
+[debug] [2020-01-11T07:08:14.229Z] Time:          Sat Jan 11 2020 14:08:14 GMT+0700 (Indochina Time)
+[debug] [2020-01-11T07:08:14.229Z] ----------------------------------------------------------------------
+[debug] [2020-01-11T07:08:14.229Z] 
+[debug] [2020-01-11T07:08:14.251Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-11T07:08:14.252Z] > authorizing via signed-in user
+[debug] [2020-01-11T07:08:14.252Z] [iam] checking project bookmark-app-ff6b2 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2020-01-11T07:08:14.254Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-01-11T07:08:14.255Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-01-11T07:08:14.619Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-11T07:08:14.633Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/bookmark-app-ff6b2:testIamPermissions  
+
