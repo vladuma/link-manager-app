@@ -60,11 +60,15 @@ export default function OptionBtns(props) {
 
     switch (action) {
       case 'dateDesc':
-        items = items.sort((a, b) => (a.created >= b.created) ? 1 : -1);
+        items = items.sort((a, b) => {
+          return (a.created.seconds >= b.created.seconds) ? 1 : -1;
+        });
         props.handleFilter(items);
         break;
       case 'dateAsc':
-        items = items.sort((a, b) => (a.created <= b.created) ? 1 : -1);
+        items = items.sort((a, b) => {
+          return (a.created.seconds <= b.created.seconds) ? 1 : -1;
+        });
         props.handleFilter(items);
         break;
       case 'aZ':
