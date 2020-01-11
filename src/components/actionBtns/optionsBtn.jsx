@@ -21,8 +21,12 @@ const useStyles = makeStyles({
 
 const options = [
     {
-        name: 'Open all links',
-        value: 'openAll'
+        name: 'Open selected',
+        value: 'open'
+    },
+    {
+      name: 'Open all links',
+      value: 'openAll'
     },
     {
         name: 'Duplicate',
@@ -50,6 +54,9 @@ export default function OptionBtns(props) {
   };
   const handleMenuAction = (action) => {
     switch (action) {
+      case 'open':
+        project.items.filter(item => item.type === 'link' && item.isSelected).forEach((link) => {window.open(link.content, "_blank");});
+        break;
       case 'openAll':
         project.items.filter(item => item.type === 'link').forEach((link) => {window.open(link.content, "_blank");});
         break;

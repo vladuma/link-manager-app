@@ -15,12 +15,11 @@ export const View = (props) => {
     console.log(props);
     let history = useHistory();
     const [project, setProject] = React.useState(props.location.state ? props.location.state : props.project);
+    const [items, setItems] = React.useState(project.items);
     
     useEffect(() => {
         setProject(props.project);
     }, [props.project]);
-
-    const [items, setItems] = React.useState(project.items);
 
     useEffect(() => {
         setItems(project.items);
@@ -37,6 +36,14 @@ export const View = (props) => {
             }
         });
     }
+    const handleItemSelect = (id, isSelected) => {
+        var prevItems = [...items];
+        
+        console.log(prevItems);
+        prevItems[id].isSelected = isSelected;
+        console.log(prevItems);
+        setItems(prevItems);
+    }
     return (
         <div>
             <Title isEditMode={false} project={project} items={items} handleFilter={items => handleFilter(items)}/>
@@ -45,7 +52,7 @@ export const View = (props) => {
                     items && items.length ?
                         items.map((item, id) => (
                             <Grid item xs={12} sm={6} md={4} key={id}>
-                                <List data={item} key={id} isView={true}/>
+                                <List data={item} key={id} isView={true} handleItemSelect={handleItemSelect}/>
                             </Grid>
                         ))
                     :
