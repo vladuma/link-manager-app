@@ -22,8 +22,8 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 140,
-    width: 70,
+    height: 120,
+    width: 80,
   },
   area: {
       display: 'flex',
@@ -44,11 +44,9 @@ function ProjectCard(props) {
   let history = useHistory();
 
   const handleOpen = () => {
-
-    history.push('/project/' + props.project.id);
+    history.push({pathname:'/project/' + props.project.id, state: project});
   }
   const handleEdit = () => {
-
     history.push({pathname: '/edit/' + props.project.id, state: project}) ; 
   }
 
@@ -58,27 +56,26 @@ function ProjectCard(props) {
 
   return (
     <Card className={classes.card}>
-      <Options project={project} />
+      <Options project={project} excludeOptions="open"/>
       <Share project={project} />
-      <CardActionArea className={classes.area}>
+      <div className={classes.area}>
         <div className={classes.media} style={{background: project.backgroundColor + ' linear-gradient(to bottom, rgba(0,0,0, 0.07), rgba(255,255,255, 0.07))'}} />
-        <CardContent>
-          <Typography className={classes.title} gutterBottom variant="h5" component="h2">
-            {project.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {project && project.items && project.items.length ?
-            `Project has ${project.items.length} items`
-            :
-            null
-          } 
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+        <CardActionArea className={classes.area}>
+          <CardContent onClick={handleOpen}>
+            <Typography className={classes.title} gutterBottom variant="h5" component="h2">
+              {project.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+            {project && project.items && project.items.length ?
+              `Project has ${project.items.length} items`
+              :
+              null
+            } 
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </div>
       <CardActions>
-        <Button size="small" color="primary" onClick={handleOpen}>
-            Open                 
-        </Button>
         <Button size="small" color="primary" onClick={handleEdit}>
             Edit                 
         </Button>

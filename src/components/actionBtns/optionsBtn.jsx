@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-const options = [
+let options = [
     {
         name: 'Open selected',
         value: 'open'
@@ -42,6 +42,8 @@ export default function OptionBtns(props) {
   const open = Boolean(anchorEl);
   const {project} = props;
   let history = useHistory();
+
+  options = options.filter((option) => option.value !== props.excludeOptions);
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
