@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-let options = [
+const opts = [
     {
         name: 'Open selected',
         value: 'open'
@@ -39,13 +39,16 @@ const ITEM_HEIGHT = 48;
 export default function OptionBtns(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [options, setOptions] = React.useState(opts);
   const open = Boolean(anchorEl);
   const {project} = props;
   let history = useHistory();
 
-  if (props.excludeOptions && props.excludeOptions !== "") {
-    options = options.filter((option) => option.value !== props.excludeOptions);
-  }
+  React.useEffect(() => {
+    if (props.excludeOptions && props.excludeOptions !== "") {
+      setOptions(options.filter((option) => option.value !== props.excludeOptions));
+    }
+  }, [props.excludeOptions]);
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);

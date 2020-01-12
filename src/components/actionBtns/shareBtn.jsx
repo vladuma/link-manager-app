@@ -23,12 +23,16 @@ const useStyles = makeStyles({
 
 const options = [
     {
-        name: 'Get link',
-        value: 'getLink'
+        name: 'Get launch link',
+        value: 'launchLink'
+    },
+    {
+      name: 'Export as a link',
+      value: 'exportLink'
     },
     {
         name: 'Export as a file',
-        value: 'export'
+        value: 'exportFile'
     }  
 ];
 
@@ -39,6 +43,7 @@ export default function ShareBtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [linkModal, setLinkModal] = React.useState(false);
   const [link, setLink] = React.useState('');
+  const [modalTitle, setModalTitle] = React.useState('');
   const open = Boolean(anchorEl);
   const {project} = props;
   let history = useHistory();
@@ -55,13 +60,17 @@ export default function ShareBtn(props) {
   const handleMenuAction = (action) => {
       setLinkModal(false);
     switch (action) {
-      case 'getLink':
-          console.log('get link');
-          setLink(props.project.id);
+      case 'exportLink':
+          setLink('exportProject?id=' + props.project.id);
+          setModalTitle('Export link');
           setLinkModal(true);
         break;
-      case 'export':
-        console.log('export');
+      case 'launchLink':
+        setLink('launchProject?id=' + props.project.id);
+        setModalTitle('Launch link');
+        setLinkModal(true);
+        break;
+      case 'exportFile':
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
         fetch(proxyurl + 'https://us-central1-bookmark-app-ff6b2.cloudfunctions.net/exportFile?id=' + props.project.id)
         .then(response => {
@@ -109,7 +118,7 @@ export default function ShareBtn(props) {
         ))}
       </Menu>
       {linkModal? 
-        <LinkPopup link={link}/>
+        <LinkPopup link={link} title={modalTitle}/>
         :
         null
       }

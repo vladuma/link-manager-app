@@ -47,11 +47,11 @@ const LinkPopup = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Share this link with other users"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{props.title}</DialogTitle>
         <DialogContent>
             <form className={classes.root}>
               <TextField id="standard-basic" inputRef={textAreaRef}
-                value={'https://us-central1-bookmark-app-ff6b2.cloudfunctions.net/exportProject?id=' + props.link}/>
+                value={'https://us-central1-bookmark-app-ff6b2.cloudfunctions.net/' + props.link}/>
               {
                 document.queryCommandSupported('copy') &&
                   <IconButton

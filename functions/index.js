@@ -60,8 +60,8 @@ exports.exportFile = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.importFile = functions.https.onRequest((request, response) => {
-    const requestNpm = require("request");
+exports.importFile = functions.https.onRequest((req, res) => {
+    const request = require("request");
     const csv = require("csvtojson");
     const bucket = admin.storage().bucket();
     const options = {
@@ -70,16 +70,66 @@ exports.importFile = functions.https.onRequest((request, response) => {
       expires: Date.now() + 1000 * 60 * 5 // 5 mins
     };
     return bucket
-        .file(request.query.pathName)
+        .file(req.query.pathName)
         .getSignedUrl(options)
         .then((data) => {
             csv()
-            .fromStream(requestNpm.get(data[0].toString()))
+            .fromStream(request.get(data[0].toString()))
             .subscribe(function(json) {
-                return response.send(json);
+                return res.send(json);
             }); 
         })
         .catch(err => {
             console.log(err);
         });
 });
+
+exports.launchProject = functions.https.onRequest((request, response) => {
+    const db = admin.firestore();
+    const ordersRef = db.collection('projects');
+
+    return ordersRef.where("id", "==", request.query.id).get()
+    .then((querySnapshot) => {
+        const projects = [];
+
+        querySnapshot.forEach(doc => {
+            const project = doc.data();
+            projects.push(project);
+        });
+
+        response.status(200).send(`
+            <!doctype html>
+                <head>
+                    <title>Link launcher</title>
+                </head>
+                <body>
+                    <h3>Following urls were opened from ${projects[0].name}</h3>
+                    <ul>
+                        ${createLinkElements(projects[0].items)}
+                    </ul>
+                    <script>
+                        var links = document.getElementsByClassName('launch-link');
+                        console.log(links);
+                        Array.prototype.forEach.call(links, function(link){
+                            link.click();
+                        });
+                        window.close();
+                    </script>
+                </body>
+            </html>
+        `);
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+const createLinkElements = (items) => {
+    let linksArr = [];
+    items
+    .filter(item => item.type === 'link')
+    .forEach((item) => {
+        linksArr.push(`<li><a href=${item.content} target="_blank" class='launch-link'>${item.content}</a></li>`);
+    });
+
+    return linksArr.join(', ');
+}
