@@ -16,6 +16,7 @@ export const View = (props) => {
     const historyProject = props.location.state;
     const [project, setProject] = React.useState(historyProject ? historyProject : props.project);
     const [items, setItems] = React.useState(project.items);
+    const [selected, setSelected] = React.useState(0);
     
     useEffect(() => {
         setProject(props.project);
@@ -41,11 +42,46 @@ export const View = (props) => {
         });
     }
     const handleItemSelect = (id, isSelected) => {
-        var prevItems = [...items];
+        let prevItems = [...items];
         
-        console.log(prevItems);
         prevItems[id].isSelected = isSelected;
-        console.log(prevItems);
+        setItems(prevItems);
+    }
+    const handleCounterUpdate = (id, counter) => {
+        let prevItems = [...items];
+        
+        if (!prevItems[id].selectedCount || prevItems[id].selectedCount !== 0) {
+            prevItems[id].selectedCount = counter;
+            setSelected(counter);
+            validateCounters(prevItems);
+        } else {
+            prevItems[id].selectedCount = 0;
+            setSelected(counter);
+            validateCounters(prevItems);
+        }
+    }
+    const validateCounters = (prevItems) => {
+        let prevCount = 0,
+            selectedArray = [];
+        prevItems
+        .filter(item => item.isSelected)
+        .sort((a, b) => a.selectedCount - b.selectedCount)
+        .forEach(item => {
+            selectedArray.push({id: item.id, count: item.selectedCount});
+        });
+
+        selectedArray
+        .sort((a, b) => a.count - b.count)
+        .forEach(selectedItem => {
+            const currentCount = selectedItem.count;
+
+            if(currentCount !== prevCount++) {
+                prevItems[selectedItem.id].selectedCount = prevCount;
+            } else {
+                prevCount = currentCount;
+            }
+        });
+        
         setItems(prevItems);
     }
     return (
@@ -56,7 +92,7 @@ export const View = (props) => {
                     items && items.length ?
                         items.map((item, id) => (
                             <Grid item xs={12} sm={6} md={4} key={id}>
-                                <List data={item} key={id} isView={true} handleItemSelect={handleItemSelect}/>
+                                <List data={item} key={id} isView={true} selectedCount={selected} updateCounter={handleCounterUpdate} handleItemSelect={handleItemSelect}/>
                             </Grid>
                         ))
                     :

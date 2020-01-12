@@ -43,7 +43,9 @@ export default function OptionBtns(props) {
   const {project} = props;
   let history = useHistory();
 
-  options = options.filter((option) => option.value !== props.excludeOptions);
+  if (props.excludeOptions && props.excludeOptions !== "") {
+    options = options.filter((option) => option.value !== props.excludeOptions);
+  }
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
@@ -57,7 +59,10 @@ export default function OptionBtns(props) {
   const handleMenuAction = (action) => {
     switch (action) {
       case 'open':
-        project.items.filter(item => item.type === 'link' && item.isSelected).forEach((link) => {window.open(link.content, "_blank");});
+        project.items
+          .filter(item => item.type === 'link' && item.isSelected)
+          .sort((a, b) => a.selectedCount > b.selectedCount ? 1 : -1)
+          .forEach((link) => {window.open(link.content, "_blank");});
         break;
       case 'openAll':
         project.items.filter(item => item.type === 'link').forEach((link) => {window.open(link.content, "_blank");});

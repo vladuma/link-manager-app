@@ -109,7 +109,7 @@ const signedInLinks = (props) => {
                                     onClick = {() => handleProjectClick(project)} >
                                         <div className={classes.swatch} style={{backgroundColor: project.backgroundColor}}/>
                                         <ListItemText primary={project.name} />
-                                        <Options project={project} />
+                                        <Options project={project} excludeOptions="open"/>
                                     </ListItem>
                                 ))}
                                 </List>
